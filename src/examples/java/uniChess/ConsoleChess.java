@@ -2,6 +2,8 @@ package uniChess;
 
 import java.util.Scanner;
 
+import uniChess.ai.Chesster;
+
 class ConsoleChess {
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);

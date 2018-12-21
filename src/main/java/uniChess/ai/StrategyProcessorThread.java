@@ -1,10 +1,14 @@
-package uniChess;
+package uniChess.ai;
 
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
 
 import java.lang.Thread;
+
+import uniChess.Game;
+import uniChess.Move;
+import uniChess.Player;
 
 public class StrategyProcessorThread extends Thread {
     

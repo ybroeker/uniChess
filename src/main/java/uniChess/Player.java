@@ -1,8 +1,5 @@
 package uniChess;
 
-import java.util.List;
-import java.util.ArrayList;
-
 /**
 *   An object representing a Player in a chess game. Each Player has a color and an Identifier of type T. 
 *   Two players of opposite color are required to initiate a Game.
@@ -44,4 +41,10 @@ public class Player <T> {
         }
         return false;
     }
+
+
+    public void registerGame(Game g){
+
+    }
+
 }

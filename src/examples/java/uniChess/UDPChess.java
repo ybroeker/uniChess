@@ -5,6 +5,8 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.Scanner;
 
+import uniChess.ai.Chesster;
+
 class UDPChess {
 
     static int server_port = 9876;

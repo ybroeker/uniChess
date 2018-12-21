@@ -212,4 +212,11 @@ public class Move {
                 materialValue > 0 ? board.getTile(destination).getOccupator() : ""), destination);
     }
 
+    public boolean isCheckmate() {
+        return CHECKMATE;
+    }
+
+    public double getMaterialValue() {
+        return materialValue;
+    }
 }
