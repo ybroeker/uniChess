@@ -1,7 +1,6 @@
-import uniChess.*;
+package uniChess;
 
-import java.util.*;
-import java.io.*;
+import java.util.Scanner;
 
 class ConsoleChess {
 	public static void main(String[] args) {
