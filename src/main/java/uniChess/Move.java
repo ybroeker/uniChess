@@ -2,6 +2,8 @@ package uniChess;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * An object representing a replacement of one Tile in a Board object with another.
@@ -53,6 +55,7 @@ public class Move {
         this.materialValue = m.materialValue;
     }
 
+
     public Board getSimulation() {
         if (sim == null) {
             sim = this.board.performMove(this);
@@ -82,7 +85,7 @@ public class Move {
      * @return A new Move instance.
      * @throws GameException
      **/
-    public static Move parseMove(Board board, Game.Color color, String in) throws GameException {
+    public static Move parseANMove(Board board, Game.Color color, String in) throws GameException {
         if (in.equals("0-0")) {
             in = (color.equals(Game.Color.BLACK) ? "kg8" : "kg1");
         } else if (in.equals("0-0-0")) {
@@ -166,6 +169,26 @@ public class Move {
 
     }
 
+    public static Move parseFenMove(final Board board, final Game.Color color, final String in) throws GameException {
+        Matcher moveMatcher = Pattern.compile("([a-h][1-8])-?([a-h][1-8]);?").matcher(in);
+
+        if (!moveMatcher.find()) {
+            throw new GameException(GameException.INVALID_MOVE, "Invalid move-pattern: " + in);
+        }
+
+        String fromString = moveMatcher.group(1);
+        String toString = moveMatcher.group(2);
+
+        final Move move = new Move(new Location(fromString), new Location(toString), board);
+        if (board.getTile(move.origin).getOccupator().color != color) {
+            throw new GameException(GameException.INVALID_MOVE, "Invalid piece-color: " + in);
+        }
+        if (!board.isValidMove(move)) {
+            throw new GameException(GameException.INVALID_MOVE, "Invalid move: " + in);
+        }
+        return move;
+    }
+
     /**
      * @return A full algebraic notation representation of this move, including rank and file specifiers.
      */
@@ -177,6 +200,10 @@ public class Move {
             return ("0-0-0");
         }
         return String.format("%s%s%s", board.getTile(origin).getOccupator().getSymbol(false).toLowerCase(), origin, destination);
+    }
+
+    public String getFenString() {
+        return String.format("%s-%s;", origin, destination);
     }
 
     @Override

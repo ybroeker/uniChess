@@ -74,7 +74,7 @@ class UDPChess {
             } else {
                 Move input = p2.getMove();
                 System.out.println("Sending move to " + clientIP + "...");
-                gameResponse = chessGame.advance(input.getANString());
+                gameResponse = chessGame.advance(input.getFenString());
                 String sym = input.movingPiece.getSymbol(false).toUpperCase();
                 send((sym.equals("P") ? "" : sym) + input.destination.toString());
             }

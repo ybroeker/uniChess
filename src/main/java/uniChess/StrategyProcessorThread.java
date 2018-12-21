@@ -19,7 +19,7 @@ public class StrategyProcessorThread extends Thread {
     private int AI_DEPTH;
     
     public StrategyProcessorThread(SmartMove sm, Chesster chesster){
-        super(sm.getANString());
+        super(sm.getFenString());
         this.sm = sm;
         this.chesster = chesster;
         this.game = chesster.getGame();

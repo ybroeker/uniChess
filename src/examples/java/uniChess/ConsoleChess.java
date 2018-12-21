@@ -20,7 +20,7 @@ class ConsoleChess {
 
 				Player currentPlayer = chessGame.getCurrentPlayer();
 				//in.nextLine();
-				String input = ((currentPlayer instanceof Chesster) ? ((Chesster)currentPlayer).getMove().getANString() : in.nextLine()); 
+				String input = ((currentPlayer instanceof Chesster) ? ((Chesster)currentPlayer).getMove().getFenString() : in.nextLine());
 				
 				if (input.equals("gametext")){
 					System.out.println(chessGame.getGameString());

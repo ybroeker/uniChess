@@ -173,7 +173,7 @@ public class Game {
 			if (white.draw && black.draw)
 				return GameEvent.DRAW;
 
-			Move move = Move.parseMove(getCurrentBoard(), getCurrentPlayer().color, in);
+			Move move = Move.parseFenMove(getCurrentBoard(), getCurrentPlayer().color, in);
 			
 			List<Move> legal = getCurrentBoard().getLegalMoves(getCurrentPlayer());
 			
@@ -185,7 +185,7 @@ public class Game {
 
 			whiteMove = !whiteMove;
 
-			gameString += move.getANString()+",";
+			gameString += move.getFenString();
 
 			if (Board.playerHasCheck(getCurrentBoard(), getDormantPlayer()) && getCurrentBoard().getLegalMoves(getCurrentPlayer()).isEmpty())
 				return GameEvent.CHECKMATE;
@@ -202,6 +202,7 @@ public class Game {
 				switch (ge.getType()) {
 					
 					case GameException.INVALID_MOVE:
+						System.err.println(ge.getMessage());
 						return GameEvent.INVALID;
 					
 					case GameException.AMBIGUOUS_MOVE:
