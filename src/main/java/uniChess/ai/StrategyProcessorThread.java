@@ -1,16 +1,15 @@
 package uniChess.ai;
 
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
-
-import java.lang.Thread;
+import java.util.List;
+import java.util.concurrent.Callable;
 
 import uniChess.Game;
 import uniChess.Move;
 import uniChess.Player;
 
-public class StrategyProcessorThread extends Thread {
+public class StrategyProcessorThread implements Callable<SmartMove> {
     
     Game game;
     Chesster chesster;
@@ -23,7 +22,6 @@ public class StrategyProcessorThread extends Thread {
     private int AI_DEPTH;
     
     public StrategyProcessorThread(SmartMove sm, Chesster chesster){
-        super(sm.getFenString());
         this.sm = sm;
         this.chesster = chesster;
         this.game = chesster.getGame();
@@ -32,7 +30,7 @@ public class StrategyProcessorThread extends Thread {
     }
 
 
-    public void run(){
+    public SmartMove call(){
         runTime = System.currentTimeMillis();
         bestMove= new double[AI_DEPTH];
         worstMove= new double[AI_DEPTH];
@@ -47,6 +45,7 @@ public class StrategyProcessorThread extends Thread {
         
         sm.strategicValue = sm.calculateStrategicValue();                
         runTime = System.currentTimeMillis() - runTime;
+        return this.sm;
     }
 
     double[] bestMove;
