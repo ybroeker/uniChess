@@ -51,7 +51,7 @@ public class Game {
      * @param gameString The series of moves to be performed
      *                   before the game starts.
      */
-    public Game(Player player1, Player player2, String gameString) {
+    public Game(Player player1, Player player2, String gameString/*TODO FEN*/) {
         this(player1, player2);
 
         for (String move : gameString.split(",")) {
@@ -201,8 +201,7 @@ public class Game {
             if (Board.playerHasCheck(getCurrentBoard(), getDormantPlayer())
                 && getCurrentBoard().getLegalMoves(getCurrentPlayer()).isEmpty()) {
                 return GameEvent.CHECKMATE;
-            } else if (getCurrentBoard().getLegalMoves(getCurrentPlayer()).isEmpty()) // This is a stalemate, which results in Draw
-            {
+            } else if (getCurrentBoard().getLegalMoves(getCurrentPlayer()).isEmpty()) { // This is a stalemate, which results in Draw
                 return GameEvent.DRAW;
             } else if (Board.playerHasCheck(getCurrentBoard(), getDormantPlayer())) {
                 return GameEvent.CHECK;
