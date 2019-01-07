@@ -1,14 +1,9 @@
-package uniChess.ai;
+package uniChess;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-
-import uniChess.Color;
-import uniChess.GameImpl;
-import uniChess.Move;
-import uniChess.Player;
 
 
 /**
@@ -35,6 +30,11 @@ public class Chesster<T> extends Player<T> {
 
     public Chesster(T id, Color c) {
         super(id, c);
+    }
+
+    public Chesster(final T id, final Color c, final int strength) {
+        super(id, c);
+        this.AI_DEPTH = strength;
     }
 
     @Override

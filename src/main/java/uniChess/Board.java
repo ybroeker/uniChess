@@ -11,7 +11,7 @@ import java.util.List;
  * Since all information about the board will never change, two lists of legal moves for each player is generated on creation.
  * These lists will be publicly acessable and unchanging so that no additional calculation will need to be done for the board.
  */
-public class Board {
+class Board {
     private Tile[][] state = new Tile[8][8];
 
     private List<Move> legalWhiteMoves;

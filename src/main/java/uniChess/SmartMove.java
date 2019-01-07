@@ -1,11 +1,6 @@
-package uniChess.ai;
+package uniChess;
 
 import java.util.Comparator;
-
-import uniChess.Color;
-import uniChess.GameImpl;
-import uniChess.Location;
-import uniChess.Move;
 
 class SmartMove extends Move implements Comparable<SmartMove> {
     public static int MATERIAL_WEIGHT = 1;

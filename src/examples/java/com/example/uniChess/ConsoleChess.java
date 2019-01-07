@@ -1,39 +1,41 @@
-package uniChess;
+package com.example.uniChess;
 
 import java.util.Scanner;
 
-import uniChess.ai.Chesster;
+import uniChess.*;
 
 class ConsoleChess {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
 
-        Player<String> p1 = new Chesster<>("EXP2", Color.WHITE);
-        Player<String> p2 = new Chesster<>("Dynamic", Color.BLACK);
+        Chesster<String> p1 = new Chesster<>("White", Color.WHITE,1);
+        Chesster<String> p2 = new Chesster<>("Black", Color.BLACK,5);
 
-        ((Chesster) p1).STRATEGY = Chesster.StrategyType.EXP2;
-        ((Chesster) p2).STRATEGY = Chesster.StrategyType.LINEAR;
+        //((Chesster) p1).STRATEGY = Chesster.StrategyType.EXP2;
+        //((Chesster) p2).STRATEGY = Chesster.StrategyType.LINEAR;
 
-        GameImpl chessGame = new GameImpl(p1, p2);
+        Game chessGame = new GameImpl(p1, p2);
 
-        System.out.println(chessGame.getBoardList().size());
-        chessGame.getCurrentBoard().print(p1, p2);
+        System.out.println(chessGame.getBoardString());
 
         while (true) {
 
             Player currentPlayer = chessGame.getCurrentPlayer();
             //in.nextLine();
+
+
             String input = ((currentPlayer instanceof Chesster) ? ((Chesster) currentPlayer).getMove().getFenString() : in.nextLine());
 
             if (input.equals("gametext")) {
-                System.out.println(chessGame.getGameString());
+                //System.out.println(chessGame.getGameString());
                 continue;
             }
 
             GameEvent gameResponse = chessGame.advance(input);
 
-            System.out.println(chessGame.getBoardList().size());
-            chessGame.getCurrentBoard().print(p1, p2);
+         //   System.out.println(chessGame.getBoardList().size());
+         //   chessGame.getCurrentBoard().print(p1, p2);
+            System.out.println(chessGame.getBoardString());
 
             switch (gameResponse) {
 
@@ -53,7 +55,7 @@ class ConsoleChess {
                     break;
                 case CHECKMATE:
                     System.out.println("Checkmate. " + chessGame.getDormantPlayer().getID() + " wins!");
-                    System.out.println(chessGame.getGameString());
+                    //System.out.println(chessGame.getGameString());
                     System.exit(0);
                     return;
                 case STALEMATE:

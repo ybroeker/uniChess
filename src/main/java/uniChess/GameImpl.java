@@ -216,4 +216,15 @@ public class GameImpl implements Game {
 
         return GameEvent.OK;
     }
+
+    @Override
+    public List<Move> getLegalMoves(final Player player) {
+        return this.getCurrentBoard().getLegalMoves(player);
+    }
+
+    @Override
+    public String getBoardString() {
+        return getCurrentBoard().toString();
+    }
+
 }

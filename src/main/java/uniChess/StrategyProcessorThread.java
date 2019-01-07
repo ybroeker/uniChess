@@ -1,13 +1,9 @@
-package uniChess.ai;
+package uniChess;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
-
-import uniChess.GameImpl;
-import uniChess.Move;
-import uniChess.Player;
 
 public class StrategyProcessorThread implements Callable<SmartMove> {
     
