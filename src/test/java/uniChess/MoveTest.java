@@ -21,14 +21,14 @@ class MoveTest {
     void parseANMove() throws Exception {
         String in = "pd4";
 
-        final Move move = Move.parseANMove(board, Game.Color.WHITE, in);
+        final Move move = Move.parseANMove(board, Color.WHITE, in);
         Assertions.assertThat(move.origin).isEqualTo(new Location("d2"));
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"d2-d4;","d2d4;","d2-d4","d2d4"})
     void parseValidFenMove(final String in) throws Exception {
-        final Move move = Move.parseFenMove(board, Game.Color.WHITE, in);
+        final Move move = Move.parseFenMove(board, Color.WHITE, in);
         Assertions.assertThat(move.origin).isEqualTo(new Location("d2"));
         Assertions.assertThat(move.destination).isEqualTo(new Location("d4"));
     }
@@ -36,14 +36,14 @@ class MoveTest {
     @ParameterizedTest
     @ValueSource(strings = {"d2-d5;","d2c4;"})
     void shouldThrowExceptionOnIllegalMove(final String in) throws Exception {
-        Assertions.assertThatThrownBy(() -> Move.parseFenMove(board, Game.Color.WHITE, in)).isInstanceOf(GameException.class);
+        Assertions.assertThatThrownBy(() -> Move.parseFenMove(board, Color.WHITE, in)).isInstanceOf(GameException.class);
 
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"i2-d4;", "a8-a9;"})
     void shouldThrowExceptionOnIllegalMoveFormat(String in) {
-        Assertions.assertThatThrownBy(() -> Move.parseFenMove(board, Game.Color.WHITE, in)).isInstanceOf(GameException.class);
+        Assertions.assertThatThrownBy(() -> Move.parseFenMove(board, Color.WHITE, in)).isInstanceOf(GameException.class);
     }
 
     @Test

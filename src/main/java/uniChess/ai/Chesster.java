@@ -5,7 +5,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-import uniChess.Game;
+import uniChess.Color;
+import uniChess.GameImpl;
 import uniChess.Move;
 import uniChess.Player;
 
@@ -16,7 +17,7 @@ import uniChess.Player;
 public class Chesster<T> extends Player<T> {
     public enum StrategyType {LOG, LINEAR, EXP2, EXP4, EXP10}
 
-    private Game game;
+    private GameImpl game;
 
     /**
      * Determines amount of layers to calculate
@@ -32,16 +33,16 @@ public class Chesster<T> extends Player<T> {
 
     public boolean dynamic = true;
 
-    public Chesster(T id, Game.Color c) {
+    public Chesster(T id, Color c) {
         super(id, c);
     }
 
     @Override
-    public void registerGame(Game g) {
+    public void registerGame(GameImpl g) {
         this.game = g;
     }
 
-    public Game getGame() {
+    public GameImpl getGame() {
         return this.game;
     }
 

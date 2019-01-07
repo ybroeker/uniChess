@@ -35,11 +35,11 @@ class UDPChess {
 
         Scanner in = new Scanner(System.in);
 
-        Player<String> p1 = new Player<>("Jake", Game.Color.WHITE);
-        Chesster<String> p2 = new Chesster<>("Chesster", Game.Color.BLACK);
+        Player<String> p1 = new Player<>("Jake", Color.WHITE);
+        Chesster<String> p2 = new Chesster<>("Chesster", Color.BLACK);
 
 
-        Game chessGame = new Game(p1, p2);
+        GameImpl chessGame = new GameImpl(p1, p2);
 
         chessGame.getCurrentBoard().print(p1, p2);
 
@@ -54,7 +54,7 @@ class UDPChess {
         byte[] sendData = new byte[4];
 
         while (true) {
-            Game.GameEvent gameResponse;
+            GameEvent gameResponse;
 
             if (chessGame.getCurrentPlayer().equals(p1)) {
                 String netMove = null;

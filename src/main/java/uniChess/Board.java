@@ -46,29 +46,29 @@ public class Board {
             }
         }
 
-        createMaterial(Game.Color.BLACK);
-        createMaterial(Game.Color.WHITE);
+        createMaterial(Color.BLACK);
+        createMaterial(Color.WHITE);
     }
 
-    private void createMaterial(Game.Color color) {
-        int d = (color.equals(Game.Color.BLACK)) ? -1 : 1;
+    private void createMaterial(Color color) {
+        int d = (color.equals(Color.BLACK)) ? -1 : 1;
         Location org = (d > 0) ? new Location(0, 0) : new Location(7, 7);
 
-        getTile(org.x + (d * 0), org.y).setOccupator(new Piece(color, Game.PieceType.ROOK));
-        getTile(org.x + (d * 7), org.y).setOccupator(new Piece(color, Game.PieceType.ROOK));
+        getTile(org.x + (d * 0), org.y).setOccupator(new Piece(color, GameImpl.PieceType.ROOK));
+        getTile(org.x + (d * 7), org.y).setOccupator(new Piece(color, GameImpl.PieceType.ROOK));
 
-        getTile(org.x + (d * 1), org.y).setOccupator(new Piece(color, Game.PieceType.KNIGHT));
-        getTile(org.x + (d * 6), org.y).setOccupator(new Piece(color, Game.PieceType.KNIGHT));
+        getTile(org.x + (d * 1), org.y).setOccupator(new Piece(color, GameImpl.PieceType.KNIGHT));
+        getTile(org.x + (d * 6), org.y).setOccupator(new Piece(color, GameImpl.PieceType.KNIGHT));
 
-        getTile(org.x + (d * 2), org.y).setOccupator(new Piece(color, Game.PieceType.BISHOP));
-        getTile(org.x + (d * 5), org.y).setOccupator(new Piece(color, Game.PieceType.BISHOP));
+        getTile(org.x + (d * 2), org.y).setOccupator(new Piece(color, GameImpl.PieceType.BISHOP));
+        getTile(org.x + (d * 5), org.y).setOccupator(new Piece(color, GameImpl.PieceType.BISHOP));
 
         // King and queen are symmetrical
-        getTile(org.x + (d * ((d > 0) ? 4 : 3)), org.y).setOccupator(new Piece(color, Game.PieceType.KING));
-        getTile(org.x + (d * ((d > 0) ? 3 : 4)), org.y).setOccupator(new Piece(color, Game.PieceType.QUEEN));
+        getTile(org.x + (d * ((d > 0) ? 4 : 3)), org.y).setOccupator(new Piece(color, GameImpl.PieceType.KING));
+        getTile(org.x + (d * ((d > 0) ? 3 : 4)), org.y).setOccupator(new Piece(color, GameImpl.PieceType.QUEEN));
 
         for (int i = 0; i < 8; ++i) {
-            getTile(i, ((d > 0) ? org.y + 1 : org.y - 1)).setOccupator(new Piece(color, Game.PieceType.PAWN));
+            getTile(i, ((d > 0) ? org.y + 1 : org.y - 1)).setOccupator(new Piece(color, GameImpl.PieceType.PAWN));
         }
     }
 
@@ -121,7 +121,7 @@ public class Board {
         return state;
     }
 
-    private String displayDeathRow(Game.Color color) {
+    private String displayDeathRow(Color color) {
         StringBuilder res = new StringBuilder();
         res.append("   ");
         for (Piece p : deathRow) {
@@ -170,7 +170,7 @@ public class Board {
 
         int max = findMaxLen(getBoardState());
         int y = 8;
-        res.append("\n\n" + displayDeathRow(reversed ? Game.Color.BLACK : Game.Color.WHITE) + "\n");
+        res.append("\n\n" + displayDeathRow(reversed ? Color.BLACK : Color.WHITE) + "\n");
         res.append("        " + (reversed ? whiten : blackn) + "\n");
         res.append(writeColumnLabels(max, reversed) + "\n");
         if (!reversed) {
@@ -198,7 +198,7 @@ public class Board {
         }
         res.append("\n" + writeColumnLabels(max, reversed));
         res.append("        " + (reversed ? blackn : whiten) + "\n");
-        res.append(displayDeathRow(reversed ? Game.Color.WHITE : Game.Color.BLACK) + "\n\n");
+        res.append(displayDeathRow(reversed ? Color.WHITE : Color.BLACK) + "\n\n");
 
         return res.toString();
     }
@@ -273,10 +273,10 @@ public class Board {
      * @param locale The location to calculate the distance for
      * @return The distance from the given location to the king of the given color
      */
-    public double getDistanceFromKing(Game.Color color, Location locale) {
+    public double getDistanceFromKing(Color color, Location locale) {
         Location kingLoc = null;
         for (Tile t : getTileList()) {
-            if (t.getOccupator() != null && t.getOccupator().type.equals(Game.PieceType.KING)
+            if (t.getOccupator() != null && t.getOccupator().type.equals(GameImpl.PieceType.KING)
                 && t.getOccupator().color.equals(color)) {
                 kingLoc = t.getLocale();
                 break;
@@ -312,7 +312,7 @@ public class Board {
             return false;
         }
 
-        int direction = movingPiece.color.equals(Game.Color.WHITE) ? 1 : -1;
+        int direction = movingPiece.color.equals(Color.WHITE) ? 1 : -1;
 
         // delta x and y
         int dx = move.destination.x - move.origin.x;
@@ -324,7 +324,7 @@ public class Board {
             case PAWN:
                 Piece enpasse = (dy == 1 && (dy + dx == 0 || dy + dx == 2)) ? getTile(
                         move.origin.x + dx, move.origin.y).getOccupator() : null;
-                move.PROMOTION = (move.destination.y == (movingPiece.color.equals(Game.Color.WHITE) ? 7 : 0));
+                move.PROMOTION = (move.destination.y == (movingPiece.color.equals(Color.WHITE) ? 7 : 0));
                 if ((dy == 1 && dx == 0 && !enemy)
                     || (movingPiece.moves.size() == 0 && dy == 2 && dx == 0
                         && cardinalLineOfSightClear(move.origin, move.destination) && !enemy)
@@ -365,14 +365,14 @@ public class Board {
                     if (dx > 0) {
                         Piece castleRook = getTile(move.origin.x + 3, move.origin.y).getOccupator();
                         if (cardinalLineOfSightClear(move.origin, new Location(move.origin.x + 3, move.origin.y)) &&
-                            castleRook != null && castleRook.type.equals(Game.PieceType.ROOK)
+                            castleRook != null && castleRook.type.equals(GameImpl.PieceType.ROOK)
                             && castleRook.moves.isEmpty()) {
                             move.KCASTLE = true;
                         }
                     } else {
                         Piece castleRook = getTile(move.origin.x - 4, move.origin.y).getOccupator();
                         if (cardinalLineOfSightClear(move.origin, new Location(move.origin.x - 4, move.origin.y)) &&
-                            castleRook != null && castleRook.type.equals(Game.PieceType.ROOK)
+                            castleRook != null && castleRook.type.equals(GameImpl.PieceType.ROOK)
                             && castleRook.moves.isEmpty()) {
                             move.QCASTLE = true;
                         }
@@ -400,7 +400,7 @@ public class Board {
      * @param color The color to gather moves for
      * @return The list of moves
      */
-    private List<Move> calculateValidMoves(Game.Color color) {
+    private List<Move> calculateValidMoves(Color color) {
         List<Move> moves = new ArrayList<>();
         for (Tile t : getTileList()) {
             if (!t.available(color)) {
@@ -424,8 +424,8 @@ public class Board {
      * @param color The color to gather moves for
      * @return The list of moves
      */
-    private List<Move> getValidMoves(Game.Color color) {
-        if (color.equals(Game.Color.BLACK)) {
+    private List<Move> getValidMoves(Color color) {
+        if (color.equals(Color.BLACK)) {
             if (validBlackMoves == null) {
                 validBlackMoves = calculateValidMoves(color);
             }
@@ -444,11 +444,11 @@ public class Board {
      * @param c     The color of player to check for
      * @return Whether the player has check
      */
-    private static boolean playerHasCheck(Board board, Game.Color c) {
+    private static boolean playerHasCheck(Board board, Color c) {
         Piece p;
         for (Move m : board.getValidMoves(c)) {
             p = board.getTile(m.destination).getOccupator();
-            if (p != null && p.ofType(Game.PieceType.KING)) {
+            if (p != null && p.ofType(GameImpl.PieceType.KING)) {
                 return true;
             }
         }
@@ -465,12 +465,12 @@ public class Board {
      * @param c The color to gather moves for
      * @return The list of moves
      */
-    private List<Move> calculateLegalMoves(Game.Color c) {
+    private List<Move> calculateLegalMoves(Color c) {
         List<Move> validMoves = getValidMoves(c);
         List<Move> legalMoves = new ArrayList<>();
 
         for (Move m : validMoves) {
-            if (!Board.playerHasCheck(performMove(m), Game.getOpposite(c))) {
+            if (!Board.playerHasCheck(performMove(m), GameImpl.getOpposite(c))) {
                 legalMoves.add(m);
             } else if (m.materialValue > 0) {
                 getTile(m.destination).getOccupator().attackingMove = null;
@@ -487,8 +487,8 @@ public class Board {
      * @param color The color to gather moves for
      * @return The list of moves
      */
-    private List<Move> getLegalMoves(Game.Color color) {
-        if (color.equals(Game.Color.BLACK)) {
+    private List<Move> getLegalMoves(Color color) {
+        if (color.equals(Color.BLACK)) {
             if (legalBlackMoves == null) {
                 legalBlackMoves = calculateLegalMoves(color);
             }
@@ -514,8 +514,8 @@ public class Board {
      * Populates both legal move lists
      */
     public void processLegal() {
-        getLegalMoves(Game.Color.WHITE);
-        getLegalMoves(Game.Color.BLACK);
+        getLegalMoves(Color.WHITE);
+        getLegalMoves(Color.BLACK);
     }
 
     /**
@@ -534,8 +534,8 @@ public class Board {
      * @param color The color of the Opponent of the Player to gather moves for
      * @return The list of moves
      */
-    private List<Move> getOpponentLegalMoves(Game.Color color) {
-        return getLegalMoves(Game.getOpposite(color));
+    private List<Move> getOpponentLegalMoves(Color color) {
+        return getLegalMoves(GameImpl.getOpposite(color));
     }
 
     /**
@@ -559,7 +559,7 @@ public class Board {
             result.moveOccupator(new Location(move.origin.x - 4, move.origin.y), new Location(
                     move.origin.x - 1, move.origin.y));
         } else if (move.PROMOTION) {
-            result.getTile(move.destination).getOccupator().type = Game.PieceType.QUEEN;
+            result.getTile(move.destination).getOccupator().type = GameImpl.PieceType.QUEEN;
         }
 
         if (move.materialValue > 0) {
@@ -601,12 +601,12 @@ public class Board {
 
         private Location locale;
 
-        public Game.Color color;
+        public Color color;
 
         public Tile(Location loc) {
             locale = loc;
             occupator = null;
-            color = ((loc.x + loc.y) % 2 == 0) ? Game.Color.BLACK : Game.Color.WHITE;
+            color = ((loc.x + loc.y) % 2 == 0) ? Color.BLACK : Color.WHITE;
         }
 
         public Tile(Tile org) {
@@ -639,7 +639,7 @@ public class Board {
          * @param c The color to use
          * @return Whether a piece of the given color can move to this tile.
          */
-        public boolean available(Game.Color c) {
+        public boolean available(Color c) {
             return (occupator == null || !occupator.color.equals(c));
         }
 
@@ -660,7 +660,7 @@ public class Board {
         @Override
         public String toString() {
             return " " + (((occupator
-                            != null) ? occupator.getSymbol() : (color.equals(Game.Color.BLACK)) ? "\u00B7" : " "))
+                            != null) ? occupator.getSymbol() : (color.equals(Color.BLACK)) ? "\u00B7" : " "))
                    + " ";
         }
     }

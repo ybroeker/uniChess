@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Piece {
 
 	/**	The Color of the Piece*/
-	public Game.Color color;
+	public Color color;
 	
 	/**	The unicode representation of the Piece*/
 	public String unicodeSymbol;
@@ -20,7 +20,7 @@ public class Piece {
 	/**	
 	*The {@code PieceType} of this Piece
 	*/
-	public Game.PieceType type;
+	public GameImpl.PieceType type;
 	
 	/** The material value of this piece.*/
 	public double value;
@@ -36,14 +36,14 @@ public class Piece {
 		this.moves.addAll(other.moves);
 	}
 
-	public Piece(Game.Color c, Game.PieceType type){
+	public Piece(Color c, GameImpl.PieceType type){
 		this.type = type;
 		this.color = c;
 		this.moves = new ArrayList<>();
 
 		int[] unicodeChars;
 
-		if (color.equals(Game.Color.BLACK) || Game.useDarkChars)
+		if (color.equals(Color.BLACK) || GameImpl.useDarkChars)
 			unicodeChars = new int[]{9823,9820,9822,9821,9819,9818};
 		else unicodeChars = new int[]{9817,9814,9816,9815,9813,9812};
 
@@ -83,7 +83,7 @@ public class Piece {
 				
 				break;
 		}
-		if (c.equals(Game.Color.BLACK))
+		if (c.equals(Color.BLACK))
 			this.symbol = this.symbol.toLowerCase();
 	}
 
@@ -93,7 +93,7 @@ public class Piece {
 	*	@param t The type to check
 	*	@return Whether the piece has a type of t
 	*/
-	public boolean ofType(Game.PieceType t){
+	public boolean ofType(GameImpl.PieceType t){
 		return type.equals(t);
 	}
 
@@ -112,7 +112,7 @@ public class Piece {
 	*	@return The symbol according to the Game unicode setting
 	*/
 	public String getSymbol(){
-		return getSymbol(Game.unicode);
+		return getSymbol(GameImpl.unicode);
 	}
 
 	/**
@@ -129,6 +129,6 @@ public class Piece {
 
 	@Override
 	public String toString(){
-		return ((Game.unicode)?unicodeSymbol:symbol);
+		return ((GameImpl.unicode) ? unicodeSymbol : symbol);
 	}
 }

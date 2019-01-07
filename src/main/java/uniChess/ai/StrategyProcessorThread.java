@@ -5,13 +5,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import uniChess.Game;
+import uniChess.GameImpl;
 import uniChess.Move;
 import uniChess.Player;
 
 public class StrategyProcessorThread implements Callable<SmartMove> {
     
-    Game game;
+    GameImpl game;
     Chesster chesster;
     int cpuSave=0;
     public long runTime;
@@ -131,6 +131,6 @@ public class StrategyProcessorThread implements Callable<SmartMove> {
     }
 
     private Player getOpponent(){
-        return game.getPlayer(Game.getOpposite(chesster.color));
+        return game.getPlayer(GameImpl.getOpposite(chesster.color));
     }
 }

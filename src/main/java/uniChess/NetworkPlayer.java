@@ -1,13 +1,6 @@
 package uniChess;
 
 import java.net.*;
-import java.nio.ByteBuffer;
-
-import uniChess.*;
-import java.io.*;
-
-import java.util.*;
-import java.io.*;
 
 /**
  * Created by cschl_000 on 4/20/2017.
@@ -27,7 +20,7 @@ public class NetworkPlayer<T> extends Player<T>  {
      * @param id identifier (
      * @param c
      */
-    public NetworkPlayer(T id, Game.Color c){
+    public NetworkPlayer(T id, Color c){
         super(id, c);
 
         System.out.format("%s :: Receiving on: %s\nSending to: %s\n", id, server_port, send_port);

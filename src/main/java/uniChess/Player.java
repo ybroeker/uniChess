@@ -11,9 +11,9 @@ public class Player <T> {
     public boolean draw;
 
     /** The color of piece that the Player can move.*/
-    public Game.Color color;
+    public Color color;
 
-    public Player(T id, Game.Color c){
+    public Player(T id, Color c){
     	this.IDENTIFIER = id;
     	this.color = c;
     }
@@ -43,7 +43,7 @@ public class Player <T> {
     }
 
 
-    public void registerGame(Game g){
+    public void registerGame(GameImpl g){
 
     }
 

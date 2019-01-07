@@ -2,7 +2,8 @@ package uniChess.ai;
 
 import java.util.Comparator;
 
-import uniChess.Game;
+import uniChess.Color;
+import uniChess.GameImpl;
 import uniChess.Location;
 import uniChess.Move;
 
@@ -31,10 +32,10 @@ class SmartMove extends Move implements Comparable<SmartMove> {
      * returns absolute distance from target location (opposite king for normal pieces, default king position for king pieces)
      */
     public double getDistanceToTarget(Location location) {
-        if (!this.movingPiece.type.equals(Game.PieceType.KING)) {
-            return this.board.getDistanceFromKing(Game.getOpposite(this.movingPiece.color), location);
+        if (!this.movingPiece.type.equals(GameImpl.PieceType.KING)) {
+            return this.board.getDistanceFromKing(GameImpl.getOpposite(this.movingPiece.color), location);
         } else {
-            return this.board.getDistanceFromLocation(location, (this.movingPiece.color.equals(Game.Color.WHITE) ? new Location(4, 0) : new Location(4, 7)));
+            return this.board.getDistanceFromLocation(location, (this.movingPiece.color.equals(Color.WHITE) ? new Location(4, 0) : new Location(4, 7)));
         }
     }
 

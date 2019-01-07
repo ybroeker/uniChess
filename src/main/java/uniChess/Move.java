@@ -85,11 +85,11 @@ public class Move {
      * @return A new Move instance.
      * @throws GameException
      **/
-    public static Move parseANMove(Board board, Game.Color color, String in) throws GameException {
+    public static Move parseANMove(Board board, Color color, String in) throws GameException {
         if (in.equals("0-0")) {
-            in = (color.equals(Game.Color.BLACK) ? "kg8" : "kg1");
+            in = (color.equals(Color.BLACK) ? "kg8" : "kg1");
         } else if (in.equals("0-0-0")) {
-            in = (color.equals(Game.Color.BLACK) ? "kc8" : "kc1");
+            in = (color.equals(Color.BLACK) ? "kc8" : "kc1");
         } else if (in.length() == 2) {
             in = "p" + in;
         }
@@ -169,7 +169,7 @@ public class Move {
 
     }
 
-    public static Move parseFenMove(final Board board, final Game.Color color, final String in) throws GameException {
+    public static Move parseFenMove(final Board board, final Color color, final String in) throws GameException {
         Matcher moveMatcher = Pattern.compile("([a-h][1-8])-?([a-h][1-8]);?").matcher(in);
 
         if (!moveMatcher.find()) {

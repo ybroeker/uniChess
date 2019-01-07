@@ -8,13 +8,13 @@ class ConsoleChess {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
 
-        Player<String> p1 = new Chesster<>("EXP2", Game.Color.WHITE);
-        Player<String> p2 = new Chesster<>("Dynamic", Game.Color.BLACK);
+        Player<String> p1 = new Chesster<>("EXP2", Color.WHITE);
+        Player<String> p2 = new Chesster<>("Dynamic", Color.BLACK);
 
         ((Chesster) p1).STRATEGY = Chesster.StrategyType.EXP2;
         ((Chesster) p2).STRATEGY = Chesster.StrategyType.LINEAR;
 
-        Game chessGame = new Game(p1, p2);
+        GameImpl chessGame = new GameImpl(p1, p2);
 
         System.out.println(chessGame.getBoardList().size());
         chessGame.getCurrentBoard().print(p1, p2);
@@ -30,7 +30,7 @@ class ConsoleChess {
                 continue;
             }
 
-            Game.GameEvent gameResponse = chessGame.advance(input);
+            GameEvent gameResponse = chessGame.advance(input);
 
             System.out.println(chessGame.getBoardList().size());
             chessGame.getCurrentBoard().print(p1, p2);
