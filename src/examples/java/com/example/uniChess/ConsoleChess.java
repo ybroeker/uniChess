@@ -26,6 +26,8 @@ class ConsoleChess {
 
             String input = ((currentPlayer instanceof Chesster) ? ((Chesster) currentPlayer).getMove().getFenString() : in.nextLine());
 
+            System.out.println(((Chesster) currentPlayer).getLastDuration().toMillis()+"ms");
+
             if (input.equals("gametext")) {
                 //System.out.println(chessGame.getGameString());
                 continue;
@@ -41,9 +43,6 @@ class ConsoleChess {
 
                 case OK:
                     break;
-                case AMBIGUOUS:
-                    System.out.println("Ambiguous Move.");
-                    return;
                 case INVALID:
                     System.out.println("Invalid Move.");
                     return;
@@ -55,11 +54,7 @@ class ConsoleChess {
                     break;
                 case CHECKMATE:
                     System.out.println("Checkmate. " + chessGame.getDormantPlayer().getID() + " wins!");
-                    //System.out.println(chessGame.getGameString());
                     System.exit(0);
-                    return;
-                case STALEMATE:
-                    System.out.println("Stalemate. " + chessGame.getDormantPlayer().getID() + " wins!");
                     return;
                 case DRAW:
                     System.out.println("Draw!");

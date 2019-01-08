@@ -210,17 +210,7 @@ class GameImpl implements Game {
 
 
         } catch (GameException ge) {
-
-            switch (ge.getType()) {
-
-                case GameException.INVALID_MOVE:
-                    System.err.println(ge.getMessage());
-                    return GameEvent.INVALID;
-
-                case GameException.AMBIGUOUS_MOVE:
-                    return GameEvent.AMBIGUOUS;
-
-            }
+            return GameEvent.INVALID;
         }
 
         return GameEvent.OK;

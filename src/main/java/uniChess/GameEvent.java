@@ -5,11 +5,24 @@ package uniChess;
  */
 public enum GameEvent {
     OK,
-    AMBIGUOUS,
+    /**
+     * Invalid move format.
+     */
     INVALID,
+    /**
+     * Illegal move.
+     */
     ILLEGAL,
+    /**
+     * The other player is in check.
+     */
     CHECK,
+    /**
+     * The other player is in checkmate.
+     */
     CHECKMATE,
-    STALEMATE,
+    /**
+     * Draw.
+     */
     DRAW
 }

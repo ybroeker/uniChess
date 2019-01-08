@@ -17,14 +17,6 @@ class MoveTest {
         board.processLegal();
     }
 
-    @Test
-    void parseANMove() throws Exception {
-        String in = "pd4";
-
-        final Move move = Move.parseANMove(board, Color.WHITE, in);
-        Assertions.assertThat(move.origin).isEqualTo(new Location("d2"));
-    }
-
     @ParameterizedTest
     @ValueSource(strings = {"d2-d4;","d2d4;","d2-d4","d2d4"})
     void parseValidFenMove(final String in) throws Exception {

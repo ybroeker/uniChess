@@ -1,5 +1,7 @@
 package uniChess;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -10,6 +12,16 @@ import java.util.Optional;
  * An object representing a Simulated Player in a chess game.
  */
 public class Chesster<T> extends Player<T> {
+
+    /**
+     * Duration of the last turn.
+     *
+     * @return the last duration, not null
+     */
+    public Duration getLastDuration() {
+        return lastDuration;
+    }
+
     enum StrategyType {LOG, LINEAR, EXP2, EXP4, EXP10}
 
     private GameImpl game;
@@ -17,7 +29,7 @@ public class Chesster<T> extends Player<T> {
     /**
      * Determines amount of layers to calculate
      */
-    protected int AI_DEPTH = 4;
+    protected final int AI_DEPTH;
 
     /**
      * Determines relative weight of piece values
@@ -28,6 +40,8 @@ public class Chesster<T> extends Player<T> {
 
     private boolean dynamic = true;
 
+    private Duration lastDuration = Duration.ZERO;
+
     /**
      * Creates a new Chesster with strength 3.
      *
@@ -36,7 +50,7 @@ public class Chesster<T> extends Player<T> {
      * @see Chesster#Chesster(Object, Color, int)
      */
     public Chesster(T id, Color c) {
-        super(id, c);
+        this(id, c, 3);
     }
 
     /**
@@ -62,8 +76,7 @@ public class Chesster<T> extends Player<T> {
 
 
     /**
-     * Returns the best possible legal move for the bot based on individual
-     * tactics and strategy (logarithmic sum of average tactical value of future moves).
+     * Returns the best possible legal move for the bot based on individual tactics and strategy.
      *
      * @return the best move
      */
@@ -78,7 +91,7 @@ public class Chesster<T> extends Player<T> {
             smartMoves.add(new SmartMove(move));
         }
 
-        System.out.println("# Possible Moves: " + smartMoves.size());
+        Instant start = Instant.now();
 
         long sysTime = System.currentTimeMillis();
 
@@ -88,9 +101,8 @@ public class Chesster<T> extends Player<T> {
                 .map(StrategyProcessorThread::call)
                 .max(Comparator.naturalOrder());
 
-        long processTime = (System.currentTimeMillis() - sysTime);
+        lastDuration = Duration.between(start, Instant.now());
 
-        System.out.format("\n# Time : %sms\n", processTime);
         return best.get();
     }
 }
