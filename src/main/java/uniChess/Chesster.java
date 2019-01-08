@@ -10,7 +10,7 @@ import java.util.Optional;
  * An object representing a Simulated Player in a chess game.
  */
 public class Chesster<T> extends Player<T> {
-    public enum StrategyType {LOG, LINEAR, EXP2, EXP4, EXP10}
+    enum StrategyType {LOG, LINEAR, EXP2, EXP4, EXP10}
 
     private GameImpl game;
 
@@ -28,10 +28,24 @@ public class Chesster<T> extends Player<T> {
 
     private boolean dynamic = true;
 
+    /**
+     * Creates a new Chesster with strength 3.
+     *
+     * @param id the Player-ID
+     * @param c  the color
+     * @see Chesster#Chesster(Object, Color, int)
+     */
     public Chesster(T id, Color c) {
         super(id, c);
     }
 
+    /**
+     * Creates a new Chesster with given strength.
+     *
+     * @param id       the Player-ID
+     * @param c        the color
+     * @param strength the strength
+     */
     public Chesster(final T id, final Color c, final int strength) {
         super(id, c);
         this.AI_DEPTH = strength;

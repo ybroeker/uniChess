@@ -14,7 +14,7 @@ class ConsoleChess {
         //((Chesster) p1).STRATEGY = Chesster.StrategyType.EXP2;
         //((Chesster) p2).STRATEGY = Chesster.StrategyType.LINEAR;
 
-        Game chessGame = Game.newGame(p1, p2);
+        Game chessGame = Game.newGame(p1, p2,"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w");
 
         System.out.println(chessGame.getBoardString());
 

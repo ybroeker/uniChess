@@ -41,12 +41,21 @@ class GameImpl implements Game {
      * @param gameString The series of moves to be performed
      *                   before the game starts.
      */
-    public GameImpl(Player player1, Player player2, String gameString/*TODO FEN*/) {
-        this(player1, player2);
+    public GameImpl(Player player1, Player player2, String fen) {
+        white = (player1.color.equals(Color.WHITE) ? player1 : player2);
+        black = (player1.color.equals(Color.WHITE) ? player2 : player1);
+        white.registerGame(this);
+        black.registerGame(this);
 
-        for (String move : gameString.split(",")) {
-            advance(move);
+        String current = fen.split(" ")[1];
+        if (!current.equals("w")) {
+            whiteMove = false;
         }
+
+        boards.add(new Board(fen));
+        getCurrentBoard().processLegal();
+
+
     }
 
     /**
@@ -148,8 +157,8 @@ class GameImpl implements Game {
 
     /**
      * <p>
-     * Attempts to advance the game by one move specified by the supplied algebraic
-     * notation string. If the move is valid, legal, and does not put the other
+     * Attempts to advance the game by one move specified by the supplied fen string.
+     * If the move is valid, legal, and does not put the other
      * player in check, checkmate, or stalemate, then this method will perform the
      * move, add the newly generated board the the board list, and switch the current
      * player, and return {@code GameEvent.OK}. Otherwise, it will return the

@@ -2,6 +2,7 @@ package uniChess;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * An object holding a boardstate. Each Board holds an array of 64 Tiles, any of which can be occupied by a Piece.
@@ -12,7 +13,10 @@ import java.util.List;
  * These lists will be publicly acessable and unchanging so that no additional calculation will need to be done for the board.
  */
 class Board {
-    private Tile[][] state = new Tile[8][8];
+
+    static final int SIZE = 8;
+
+    private Tile[][] state = new Tile[SIZE][SIZE];
 
     private List<Move> legalWhiteMoves;
 
@@ -70,6 +74,80 @@ class Board {
         for (int i = 0; i < 8; ++i) {
             getTile(i, ((d > 0) ? org.y + 1 : org.y - 1)).setOccupator(new Piece(color, GameImpl.PieceType.PAWN));
         }
+    }
+
+
+    public Board(String fen) {
+        for (int y = 0; y < 8; ++y) {
+            for (int x = 0; x < 8; ++x) {
+                state[y][x] = new Tile(new Location(x, 7 - y));
+            }
+        }
+        if (!fen.contains(" ")) {
+            throw new IllegalArgumentException(fen);
+        }
+        final String boardString = fen.split(" ")[0];
+        final String[] rows = boardString.split(Pattern.quote("/"));
+        if (rows.length != SIZE) {
+            throw new IllegalArgumentException(fen);
+        }
+
+
+        for (int i = 0; i < SIZE; i++) {
+            this.parseRow(rows[i], i);
+        }
+
+    }
+
+
+    private void parseRow(final String fenRow, int rowNr) {
+        int column = 0;
+        for (final char c : fenRow.toCharArray()) {
+            if (column >= SIZE) {
+                throw new IllegalArgumentException("Illegal row: " + fenRow);
+            }
+            if (Character.isDigit(c)) {
+                column += parseInt(c);
+            } else {
+                final GameImpl.PieceType type = parseType(c);
+                final Color color = parsePieceColor(c);
+                state[rowNr][column].setOccupator(new Piece(color, type));
+                column += 1;
+            }
+        }
+        if (column != SIZE) {
+            throw new IllegalArgumentException("Illegal row: " + fenRow);
+        }
+    }
+
+    private Color parsePieceColor(final char color) {
+        if (Character.isUpperCase(color)) {
+            return Color.WHITE;
+        }
+        return Color.BLACK;
+    }
+
+
+    private GameImpl.PieceType parseType(final char type) {
+        switch (Character.toLowerCase(type)) {
+            case 'k':
+                return GameImpl.PieceType.KING;
+            case 'q':
+                return GameImpl.PieceType.QUEEN;
+            case 'r':
+                return GameImpl.PieceType.ROOK;
+            case 'n':
+                return GameImpl.PieceType.KNIGHT;
+            case 'b':
+                return GameImpl.PieceType.BISHOP;
+            case 'p':
+                return GameImpl.PieceType.PAWN;
+        }
+        throw new IllegalArgumentException("Illegal Type: " + type);
+    }
+
+    private int parseInt(final char number) {
+        return number - '0';
     }
 
     protected List<Tile> tileList = new ArrayList<>();

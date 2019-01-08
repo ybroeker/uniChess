@@ -3,18 +3,29 @@ package uniChess;
 import java.util.Objects;
 
 /**
- * An object representing a point in a two dimensional grid. This is used for the internal coordinate system of the
- * Board, as well as parsing algebraic locations to integer format.
+ * A point on the two dimensional chess-board.
+ *
+ * This is used for the internal coordinate system of the Board
  */
 public class Location {
-    public final int x, y;
+    protected final int x, y;
 
-    public Location(int x, int y) {
+    protected Location(int x, int y) {
+
+        if (x < 0 || y < 0) {
+            throw new IndexOutOfBoundsException();
+        }
+
+        if (x >= Board.SIZE || y >= Board.SIZE) {
+            throw new IndexOutOfBoundsException();
+        }
+
+
         this.x = x;
         this.y = y;
     }
 
-    public Location(String in) throws GameException {
+    protected Location(String in) throws GameException {
         try {
             in = in.toLowerCase();
             final String col = "abcdefgh";
