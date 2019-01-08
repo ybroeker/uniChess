@@ -4,24 +4,24 @@ import java.util.List;
 import java.util.ArrayList;
 
 /**
-*	An object representing a chess piece. Pieces hold histories of locations they have been moved to.  
+*	An object representing a chess piece. Pieces hold histories of locations they have been moved to.
 */
-public class Piece {
+class Piece {
 
 	/**	The Color of the Piece*/
 	public Color color;
-	
+
 	/**	The unicode representation of the Piece*/
 	public String unicodeSymbol;
 
 	/**	The plaintext representation of the piece*/
 	public String symbol;
 
-	/**	
+	/**
 	*The {@code PieceType} of this Piece
 	*/
 	public GameImpl.PieceType type;
-	
+
 	/** The material value of this piece.*/
 	public double value;
 
@@ -51,19 +51,19 @@ public class Piece {
 			case PAWN:
 				this.value = 2.0;
 				this.symbol = "P";
-				this.unicodeSymbol = new String(Character.toChars(unicodeChars[0])); 
+				this.unicodeSymbol = new String(Character.toChars(unicodeChars[0]));
 				break;
 			case ROOK:
 				this.value = 6.0;
 				this.symbol = "R";
 				this.unicodeSymbol = new String(Character.toChars(unicodeChars[1]));
-				
+
 				break;
 			case KNIGHT:
 				this.value = 4.0;
 				this.symbol = "N";
 				this.unicodeSymbol = new String(Character.toChars(unicodeChars[2]));
-				
+
 				break;
 			case BISHOP:
 				this.value = 4.0;
@@ -74,13 +74,13 @@ public class Piece {
 				this.value = 10.0;
 				this.symbol = "Q";
 				this.unicodeSymbol = new String(Character.toChars(unicodeChars[4]));
-				
+
 				break;
-			case KING:	
+			case KING:
 				this.value = 200.0;
 				this.symbol = "K";
 				this.unicodeSymbol = new String(Character.toChars(unicodeChars[5]));
-				
+
 				break;
 		}
 		if (c.equals(Color.BLACK))

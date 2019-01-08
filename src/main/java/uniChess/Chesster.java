@@ -17,16 +17,16 @@ public class Chesster<T> extends Player<T> {
     /**
      * Determines amount of layers to calculate
      */
-    public int AI_DEPTH = 4;
+    protected int AI_DEPTH = 4;
 
     /**
      * Determines relative weight of piece values
      */
-    public int MATERIAL_WEIGHT = 3;
+    protected int MATERIAL_WEIGHT = 3;
 
-    public StrategyType STRATEGY = StrategyType.EXP4;
+    private StrategyType STRATEGY = StrategyType.EXP4;
 
-    public boolean dynamic = true;
+    private boolean dynamic = true;
 
     public Chesster(T id, Color c) {
         super(id, c);
@@ -38,11 +38,11 @@ public class Chesster<T> extends Player<T> {
     }
 
     @Override
-    public void registerGame(GameImpl g) {
+    protected void registerGame(GameImpl g) {
         this.game = g;
     }
 
-    public GameImpl getGame() {
+    protected GameImpl getGame() {
         return this.game;
     }
 

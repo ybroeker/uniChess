@@ -12,36 +12,36 @@ public class Move {
     /**
      * Boolean flag for special move type.
      */
-    public boolean ENPASSE, QCASTLE, KCASTLE, PROMOTION, CHECKMATE;
+    boolean ENPASSE, QCASTLE, KCASTLE, PROMOTION, CHECKMATE;
 
     /**
      * Location of Tile containing piece to move
      */
-    public Location origin;
+    Location origin;
 
     /**
      * Location of Tile to move piece to
      */
-    public Location destination;
+    Location destination;
 
-    public Board board, sim = null;
+    Board board, sim = null;
 
-    public Piece movingPiece;
+    Piece movingPiece;
 
     /**
      * Value of the piece this move would capture
      */
-    public double materialValue;
+    double materialValue;
 
 
-    public Move(Location a, Location b, Board bo) {
+    protected Move(Location a, Location b, Board bo) {
         origin = a;
         destination = b;
         board = bo;
         movingPiece = bo.getTile(origin).getOccupator();
     }
 
-    public Move(Move m) {
+    protected Move(Move m) {
         this.ENPASSE = m.ENPASSE;
         this.QCASTLE = m.QCASTLE;
         this.KCASTLE = m.KCASTLE;
@@ -56,14 +56,14 @@ public class Move {
     }
 
 
-    public Board getSimulation() {
+    protected Board getSimulation() {
         if (sim == null) {
             sim = this.board.performMove(this);
         }
         return sim;
     }
 
-    public boolean isSpecial() {
+    protected boolean isSpecial() {
         return (ENPASSE || QCASTLE || KCASTLE || PROMOTION || CHECKMATE);
     }
 
@@ -85,7 +85,7 @@ public class Move {
      * @return A new Move instance.
      * @throws GameException
      **/
-    public static Move parseANMove(Board board, Color color, String in) throws GameException {
+    protected static Move parseANMove(Board board, Color color, String in) throws GameException {
         if (in.equals("0-0")) {
             in = (color.equals(Color.BLACK) ? "kg8" : "kg1");
         } else if (in.equals("0-0-0")) {
@@ -169,7 +169,7 @@ public class Move {
 
     }
 
-    public static Move parseFenMove(final Board board, final Color color, final String in) throws GameException {
+    protected static Move parseFenMove(final Board board, final Color color, final String in) throws GameException {
         Matcher moveMatcher = Pattern.compile("([a-h][1-8])-?([a-h][1-8]);?").matcher(in);
 
         if (!moveMatcher.find()) {
@@ -192,7 +192,7 @@ public class Move {
     /**
      * @return A full algebraic notation representation of this move, including rank and file specifiers.
      */
-    public String getANString() {
+    protected String getANString() {
         if (KCASTLE) {
             return ("0-0");
         }
@@ -212,11 +212,19 @@ public class Move {
                 materialValue > 0 ? board.getTile(destination).getOccupator() : ""), destination);
     }
 
-    public boolean isCheckmate() {
+    protected boolean isCheckmate() {
         return CHECKMATE;
     }
 
-    public double getMaterialValue() {
+    protected double getMaterialValue() {
         return materialValue;
+    }
+
+    public Location getOrigin() {
+        return origin;
+    }
+
+    public Location getDestination() {
+        return destination;
     }
 }

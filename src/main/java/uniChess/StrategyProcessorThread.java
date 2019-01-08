@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-public class StrategyProcessorThread implements Callable<SmartMove> {
-    
+class StrategyProcessorThread implements Callable<SmartMove> {
+
     GameImpl game;
     Chesster chesster;
     int cpuSave=0;
@@ -16,7 +16,7 @@ public class StrategyProcessorThread implements Callable<SmartMove> {
     public SmartMove sm;
 
     private int AI_DEPTH;
-    
+
     public StrategyProcessorThread(SmartMove sm, Chesster chesster){
         this.sm = sm;
         this.chesster = chesster;
@@ -38,23 +38,23 @@ public class StrategyProcessorThread implements Callable<SmartMove> {
         sm.unWeightedTreeAverages = new double[AI_DEPTH];
 
         getMoveTreeVal(sm, AI_DEPTH, 0, sm.unWeightedTreeAverages);
-        
-        sm.strategicValue = sm.calculateStrategicValue();                
+
+        sm.strategicValue = sm.calculateStrategicValue();
         runTime = System.currentTimeMillis() - runTime;
         return this.sm;
     }
 
     double[] bestMove;
-    double[] worstMove; 
+    double[] worstMove;
     /**
     *   Returns all legal submoves of a move up to depth of max; populates given array with weighted average tactical val for each node depth.
-    *   Weight applied is (1 / nodedepth) to account for loss in prediction accuracy over time. 
+    *   Weight applied is (1 / nodedepth) to account for loss in prediction accuracy over time.
     *
     *   @return The tree of moves
     */
 
     public void getMoveTreeVal(SmartMove m, int max, int depth, double[] vals){
-        
+
         if (depth < max){
 
             List<SmartMove> submoves = getSubMoves(m);
@@ -74,7 +74,7 @@ public class StrategyProcessorThread implements Callable<SmartMove> {
 
             treesize += submoves.size();
             vals[depth] = worstMove[depth] + bestMove[depth];
-        }   
+        }
     }
 
     /**
@@ -94,13 +94,13 @@ public class StrategyProcessorThread implements Callable<SmartMove> {
         }
 
         List<Move> potentialOpponentLegal = m.getSimulation().getOpponentLegalMoves(chesster);
-        
+
         // CHECKMATE !
         if (potentialOpponentLegal.isEmpty()){
             m.CHECKMATE = true;
             return new ArrayList<SmartMove>();
         }
-        
+
         double potCaptureVal = 0;
         List<SmartMove> opponentSorted = new ArrayList<>();
         for (Move olm : potentialOpponentLegal){
@@ -115,14 +115,14 @@ public class StrategyProcessorThread implements Callable<SmartMove> {
 
 
         Collections.sort(opponentSorted);
-        
+
         SmartMove opponentBest = opponentSorted.get(opponentSorted.size()-1);
 
         // perform the best possible move in response as opponent
         List<SmartMove> res = new ArrayList<>();
         for (Move legal : opponentBest.getSimulation().getLegalMoves(chesster))
             res.add(new SmartMove(legal));
-        
+
         return res;
     }
 

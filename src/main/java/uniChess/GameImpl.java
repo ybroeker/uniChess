@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * An object for creating, maintaining, and communicating with a chess game.
  */
-public class GameImpl implements Game {
+class GameImpl implements Game {
 
     /**
      * Type of game pieces.

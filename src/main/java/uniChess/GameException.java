@@ -2,7 +2,7 @@ package uniChess;
 /**
 *	An Exception for input errors that also details move abiguity  
 */
-public class GameException extends Exception {
+class GameException extends Exception {
 
 	public static final int INVALID_MOVE = 0;
 	public static final int AMBIGUOUS_MOVE = 1;

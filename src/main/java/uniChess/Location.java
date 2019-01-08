@@ -7,7 +7,7 @@ import java.util.Objects;
  * Board, as well as parsing algebraic locations to integer format.
  */
 public class Location {
-    public int x, y;
+    public final int x, y;
 
     public Location(int x, int y) {
         this.x = x;
@@ -23,7 +23,7 @@ public class Location {
             this.y = row.indexOf(in.charAt(1));
 
             if (x < 0 || y < 0) {
-                throw new IndexOutOfBoundsException("ayylmao");
+                throw new IndexOutOfBoundsException();
             }
         } catch (IndexOutOfBoundsException e) {
             throw new GameException(GameException.INVALID_MOVE, "Could not parse location from '" + in + "'");
@@ -53,5 +53,13 @@ public class Location {
         final String col = "abcdefgh";
         final String row = "12345678";
         return String.format("%c%c", col.charAt(x), row.charAt(y));
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 }

@@ -8,10 +8,10 @@ public class Player <T> {
     private T IDENTIFIER;
 
     /** A general boolean switch for drawing.*/
-    public boolean draw;
+    protected boolean draw;
 
     /** The color of piece that the Player can move.*/
-    public Color color;
+    protected Color color;
 
     public Player(T id, Color c){
     	this.IDENTIFIER = id;
@@ -43,8 +43,11 @@ public class Player <T> {
     }
 
 
-    public void registerGame(GameImpl g){
+    protected void registerGame(GameImpl g){
 
     }
 
+    public Color getColor() {
+        return color;
+    }
 }
