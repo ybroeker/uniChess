@@ -8,8 +8,8 @@ class ConsoleChess {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
 
-        Chesster<String> p1 = new Chesster<>("White", Color.WHITE,1);
-        Chesster<String> p2 = new Chesster<>("Black", Color.BLACK,5);
+        Chesster p1 = new Chesster("White", Color.WHITE,1);
+        Chesster p2 = new Chesster("Black", Color.BLACK,5);
 
         //((Chesster) p1).STRATEGY = Chesster.StrategyType.EXP2;
         //((Chesster) p2).STRATEGY = Chesster.StrategyType.LINEAR;

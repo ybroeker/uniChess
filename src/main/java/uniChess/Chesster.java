@@ -11,7 +11,7 @@ import java.util.Optional;
 /**
  * An object representing a Simulated Player in a chess game.
  */
-public class Chesster<T> extends Player<T> {
+public class Chesster extends Player {
 
     /**
      * Duration of the last turn.
@@ -47,9 +47,9 @@ public class Chesster<T> extends Player<T> {
      *
      * @param id the Player-ID
      * @param c  the color
-     * @see Chesster#Chesster(Object, Color, int)
+     * @see Chesster#Chesster(String, Color, int)
      */
-    public Chesster(T id, Color c) {
+    public Chesster(String id, Color c) {
         this(id, c, 3);
     }
 
@@ -60,7 +60,7 @@ public class Chesster<T> extends Player<T> {
      * @param c        the color
      * @param strength the strength
      */
-    public Chesster(final T id, final Color c, final int strength) {
+    public Chesster(final String id, final Color c, final int strength) {
         super(id, c);
         this.AI_DEPTH = strength;
     }
