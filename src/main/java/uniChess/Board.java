@@ -28,6 +28,7 @@ class Board {
 
     private List<Piece> deathRow = new ArrayList<>();
 
+    private boolean strict = false;
 
     /**
      * Sets the orientation of the string representation of the board.
@@ -412,8 +413,7 @@ class Board {
                 } else if (!enemy &&
                            enpasse != null &&
                            getTile(move.origin.x + dx, move.origin.y).available(movingPiece.color) &&
-                           enpasse.ofType(movingPiece.type) &&
-                           enpasse.moves.size() == 1) {
+                           enpasse.ofType(movingPiece.type)) {
                     move.ENPASSE = true;
                     validMove = true;
                     break;
@@ -439,19 +439,17 @@ class Board {
                 break;
 
             case KING:
-                if (movingPiece.moves.isEmpty() && Math.abs(dx) == 2 && dy == 0) {
+                if (Math.abs(dx) == 2 && dy == 0) {
                     if (dx > 0) {
                         Piece castleRook = getTile(move.origin.x + 3, move.origin.y).getOccupator();
                         if (cardinalLineOfSightClear(move.origin, new Location(move.origin.x + 3, move.origin.y)) &&
-                            castleRook != null && castleRook.type.equals(GameImpl.PieceType.ROOK)
-                            && castleRook.moves.isEmpty()) {
+                            castleRook != null && castleRook.type.equals(GameImpl.PieceType.ROOK)) {
                             move.KCASTLE = true;
                         }
                     } else {
                         Piece castleRook = getTile(move.origin.x - 4, move.origin.y).getOccupator();
                         if (cardinalLineOfSightClear(move.origin, new Location(move.origin.x - 4, move.origin.y)) &&
-                            castleRook != null && castleRook.type.equals(GameImpl.PieceType.ROOK)
-                            && castleRook.moves.isEmpty()) {
+                            castleRook != null && castleRook.type.equals(GameImpl.PieceType.ROOK)) {
                             move.QCASTLE = true;
                         }
                     }
