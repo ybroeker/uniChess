@@ -441,17 +441,19 @@ class Board {
             case KING:
                 if (Math.abs(dx) == 2 && dy == 0) {
                     if (dx > 0) {
+                        if (move.origin.x + 3 < SIZE) {
                         Piece castleRook = getTile(move.origin.x + 3, move.origin.y).getOccupator();
                         if (cardinalLineOfSightClear(move.origin, new Location(move.origin.x + 3, move.origin.y)) &&
                             castleRook != null && castleRook.type.equals(GameImpl.PieceType.ROOK)) {
                             move.KCASTLE = true;
-                        }
+                        }}
                     } else {
+                        if (move.origin.x -4 >=0) {
                         Piece castleRook = getTile(move.origin.x - 4, move.origin.y).getOccupator();
                         if (cardinalLineOfSightClear(move.origin, new Location(move.origin.x - 4, move.origin.y)) &&
                             castleRook != null && castleRook.type.equals(GameImpl.PieceType.ROOK)) {
                             move.QCASTLE = true;
-                        }
+                        }}
                     }
                     validMove = true;
                     break;
