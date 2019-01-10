@@ -180,6 +180,10 @@ public class Move {
         String toString = moveMatcher.group(2);
 
         final Move move = new Move(new Location(fromString), new Location(toString), board);
+
+        if (board.getTile(move.origin).getOccupator() == null) {
+            throw new GameException(GameException.INVALID_MOVE, "No Piece on Field: " + in);
+        }
         if (board.getTile(move.origin).getOccupator().color != color) {
             throw new GameException(GameException.INVALID_MOVE, "Invalid piece-color: " + in);
         }

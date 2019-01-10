@@ -71,4 +71,14 @@ class GameTest {
     }
 
 
+    @Test
+    void testEmptyfield() {
+        Player p1 = new Player("1", Color.WHITE);
+        Player p2 = new Player("2", Color.BLACK);
+        Game game = Game.newGame(p1, p2, "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w");
+
+        Assertions.assertThat(game.advance("d5-c6")).isEqualTo(GameEvent.INVALID);
+    }
+
+
 }
