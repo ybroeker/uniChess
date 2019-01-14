@@ -19,6 +19,19 @@ class GameTest {
     }
 
     @Test
+    void testIllegalKurzeRochadeWeiß() {
+        Player p1 = new Player("1", Color.WHITE);
+        Player p2 = new Player("2", Color.BLACK);
+        Game game = Game.newGame(p1, p2, "rnbqkbnr/pppppppp/8/8/8/1NBPQ1N1/PP1PPBPP/RB2K1BR w");
+
+        System.out.println(game.getBoardString());
+
+        Assertions.assertThat(game.advance("e1-c1")).isEqualTo(GameEvent.INVALID);
+
+        System.out.println(game.getBoardString());
+    }
+
+    @Test
     void testLangeRochadeWeiß() {
         Player p1 = new Player("1", Color.WHITE);
         Player p2 = new Player("2", Color.BLACK);
