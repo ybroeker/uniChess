@@ -401,20 +401,11 @@ class Board {
 
         switch (movingPiece.type) {
             case PAWN:
-                Piece enpasse = (dy == 1 && (dy + dx == 0 || dy + dx == 2)) ? getTile(
-                        move.origin.x + dx, move.origin.y).getOccupator() : null;
                 move.PROMOTION = (move.destination.y == (movingPiece.color.equals(Color.WHITE) ? 7 : 0));
                 if ((dy == 1 && dx == 0 && !enemy)
                     || (movingPiece.moves.size() == 0 && dy == 2 && dx == 0
                         && cardinalLineOfSightClear(move.origin, move.destination) && !enemy)
                     || (dy == 1 && (dy + dx == 0 || dy + dx == 2) && enemy)) {
-                    validMove = true;
-                    break;
-                } else if (!enemy &&
-                           enpasse != null &&
-                           getTile(move.origin.x + dx, move.origin.y).available(movingPiece.color) &&
-                           enpasse.ofType(movingPiece.type)) {
-                    move.ENPASSE = true;
                     validMove = true;
                     break;
                 }

@@ -76,11 +76,7 @@ class GameTest {
         Player p2 = new Player("2", Color.BLACK);
         Game game = Game.newGame(p1, p2, "rnbqkbnr/pp1ppppp/8/2pP4/8/8/PPP1PPPP/RNBQKBNR w");
 
-        System.out.println(game.getBoardString());
-
-        Assertions.assertThat(game.advance("d5-c6")).isEqualTo(GameEvent.OK);
-
-        System.out.println(game.getBoardString());
+        Assertions.assertThat(game.advance("d5-c6")).isEqualTo(GameEvent.INVALID);
     }
 
 
