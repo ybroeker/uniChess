@@ -433,21 +433,24 @@ class Board {
                 if (Math.abs(dx) == 2 && dy == 0) {
                     if (dx > 0) {
                         if (move.origin.x + 3 < SIZE) {
-                        Piece castleRook = getTile(move.origin.x + 3, move.origin.y).getOccupator();
-                            System.out.println();
-                        if (cardinalLineOfSightClear(move.origin, new Location(move.origin.x + 3, move.origin.y)) &&
-                            castleRook != null && castleRook.type.equals(GameImpl.PieceType.ROOK)) {
-                            move.KCASTLE = true;
-                            validMove = true;
-                        }}
+                            Piece castleRook = getTile(move.origin.x + 3, move.origin.y).getOccupator();
+                            if (cardinalLineOfSightClear(move.origin, new Location(move.origin.x + 3, move.origin.y)) &&
+                                castleRook != null && castleRook.type.equals(GameImpl.PieceType.ROOK) &&
+                                !playerHasCheck(this, GameImpl.getOpposite(movingPiece.color))) {
+                                move.KCASTLE = true;
+                                validMove = true;
+                            }
+                        }
                     } else {
-                        if (move.origin.x -4 >=0) {
-                        Piece castleRook = getTile(move.origin.x - 4, move.origin.y).getOccupator();
-                        if (cardinalLineOfSightClear(move.origin, new Location(move.origin.x - 4, move.origin.y)) &&
-                            castleRook != null && castleRook.type.equals(GameImpl.PieceType.ROOK)) {
-                            move.QCASTLE = true;
-                            validMove = true;
-                        }}
+                        if (move.origin.x - 4 >= 0) {
+                            Piece castleRook = getTile(move.origin.x - 4, move.origin.y).getOccupator();
+                            if (cardinalLineOfSightClear(move.origin, new Location(move.origin.x - 4, move.origin.y)) &&
+                                castleRook != null && castleRook.type.equals(GameImpl.PieceType.ROOK) &&
+                                !playerHasCheck(this, GameImpl.getOpposite(movingPiece.color))) {
+                                move.QCASTLE = true;
+                                validMove = true;
+                            }
+                        }
                     }
                     break;
                 }
@@ -471,8 +474,7 @@ class Board {
      * @param color The color to gather moves for
      * @return The list of moves
      */
-    private List<Move> calculateValidMoves(Color color) {
-        List<Move> moves = new ArrayList<>();
+    private List<Move> calculateValidMoves(Color color, List<Move> moves) {
         for (Tile t : getTileList()) {
             if (!t.available(color)) {
                 for (int i = 0; i < 8; ++i) {
@@ -498,12 +500,14 @@ class Board {
     private List<Move> getValidMoves(Color color) {
         if (color.equals(Color.BLACK)) {
             if (validBlackMoves == null) {
-                validBlackMoves = calculateValidMoves(color);
+                validBlackMoves = new ArrayList<>();
+                calculateValidMoves(color, validBlackMoves);
             }
             return validBlackMoves;
         }
         if (validWhiteMoves == null) {
-            validWhiteMoves = calculateValidMoves(color);
+            validWhiteMoves = new ArrayList<>();
+            calculateValidMoves(color, validWhiteMoves);
         }
         return validWhiteMoves;
     }
@@ -539,7 +543,6 @@ class Board {
     private List<Move> calculateLegalMoves(Color c) {
         List<Move> validMoves = getValidMoves(c);
         List<Move> legalMoves = new ArrayList<>();
-
         for (Move m : validMoves) {
             if (!Board.playerHasCheck(performMove(m), GameImpl.getOpposite(c))) {
                 legalMoves.add(m);
@@ -735,4 +738,5 @@ class Board {
                    + " ";
         }
     }
+
 }

@@ -69,6 +69,19 @@ class GameTest {
         System.out.println(game.getBoardString());
     }
 
+    @Test
+    void testLangeRochadeWeißImSchach() {
+        Player p1 = new Player("1", Color.WHITE);
+        Player p2 = new Player("2", Color.BLACK);
+        GameImpl game = (GameImpl) Game.newGame(p1, p2, "r3k2r/8/8/8/8/4r3/8/R3K2R w");
+
+        System.out.println(game.getBoardString());
+
+        Assertions.assertThat(game.advance("e1-c1")).isEqualTo(GameEvent.INVALID);
+
+        System.out.println(game.getBoardString());
+    }
+
 
     @Test
     void testEnPassantWeiß() {
